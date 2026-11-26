@@ -1,0 +1,22 @@
+@import "tailwindcss";
+
+:root { color-scheme: dark; }
+body { @apply bg-slate-950 text-slate-100 antialiased; }
+
+@layer components {
+  .panel { @apply rounded-xl border border-slate-800 bg-slate-900; }
+  .btn { @apply cursor-pointer rounded-lg bg-slate-700 px-4 py-2 text-sm font-semibold hover:bg-slate-600 disabled:cursor-not-allowed disabled:opacity-40; }
+  .btn-primary { @apply bg-sky-700 hover:bg-sky-600; }
+  .btn-success { @apply bg-emerald-700 hover:bg-emerald-600; }
+  .input { @apply w-full rounded-lg border border-slate-700 bg-slate-950 px-3 py-2 text-sm focus:border-sky-500 focus:outline-none; }
+  .label { @apply mb-1 block text-xs font-semibold uppercase tracking-wide text-slate-400; }
+  .th { @apply px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-slate-400; }
+  .td { @apply border-t border-slate-800 px-3 py-2 align-top text-sm; }
+}
+
+/* Short wall screens (e.g. 1366x768): keep all four machines visible. */
+@media (min-width: 1024px) and (max-height: 850px) {
+  .machine-card { min-height: 15rem; }
+  .machine-body { gap: 0.35rem; padding: 0.6rem 1.25rem; }
+  .machine-body .timer { font-size: 2.5rem; line-height: 1.1; }
+}
