@@ -1,6 +1,11 @@
 import { useEffect, useState } from "react";
 import { setZone } from "./time";
 
+// Same rule as api.js: same-origin unless VITE_API_BASE points elsewhere.
+const WS_URL = import.meta.env.VITE_API_BASE
+  ? `${import.meta.env.VITE_API_BASE.replace(/^http/, "ws")}/ws/dashboard`
+  : `${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws/dashboard`;
+
 /** Live dashboard feed: reconnects automatically and flags stale data. */
 export function useLive() {
   const [state, setState] = useState({ data: null, offset: 0, connected: false, received: 0 });
@@ -20,7 +25,7 @@ export function useLive() {
     const connect = () => {
       retry = null;
       last = Date.now();
-      socket = new WebSocket(`${location.protocol === "https:" ? "wss" : "ws"}://${location.host}/ws/dashboard`);
+      socket = new WebSocket(WS_URL);
       socket.onmessage = (e) => {
         const data = JSON.parse(e.data);
         last = Date.now();
